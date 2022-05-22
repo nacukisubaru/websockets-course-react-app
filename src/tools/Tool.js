@@ -5,7 +5,7 @@ export default class Tool {
         this.ctx = canvas.getContext('2d');
         this.destroyEvents();
     }
-    
+
     /*сеттеры обратиться к ним можно как к свойству объекта это происходит в toolState*/
     /*меняем параметры у свойств 2d контекста канваса*/
     set fillColor(color) {
