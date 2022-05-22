@@ -12,7 +12,6 @@ const Canvas = observer(()=> {
     useEffect(()=>{
         /*изменение состояния через написанный state*/
         canvasState.setCanvas(canvasRef.current);
-        //toolState.setTool(new Brush(canvasRef.current));
     }, [])
 
     return (
