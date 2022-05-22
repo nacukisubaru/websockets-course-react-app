@@ -11,6 +11,18 @@ class ToolState {
     setTool(tool) {
         this.tool = tool;
     }
+    /*action для вызова сеттера экземпляра класса который храниться в стейте tool*/
+    setFillColor(color) {
+        this.tool.fillColor = color;
+    }
+
+    setStrokeColor(color) {
+        this.tool.strokeColor = color;
+    }
+
+    setLineWidth(width) {
+        this.tool.lineWidth = width;
+    }
 }
 
 export default new ToolState();
