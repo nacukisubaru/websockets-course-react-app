@@ -1,7 +1,8 @@
 import React from "react";
 import '../styles/toolbar.scss';
+import {observer} from "mobx-react-lite";
 
-const ToolBar = () => {
+const ToolBar = observer(()=> {
     return (
         <div className="toolbar">
             <button className="toolbar-btn brush"></button>
@@ -15,6 +16,6 @@ const ToolBar = () => {
             <button className="toolbar-btn save"></button>
         </div>
     )
-}
+})
 
 export default ToolBar;
