@@ -14,6 +14,8 @@ const SettingBar = () => {
                 min={1}
                 max={50}
             ></input>
+            <label htmlFor="stroke-color">Цвет обводки</label>
+            <input onChange={e => toolState.setStrokeColor(e.target.value)} id="stroke-color" type="color" />
         </div>
     );
 };
