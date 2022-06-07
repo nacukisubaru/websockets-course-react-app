@@ -25,6 +25,7 @@ const Canvas = observer(()=> {
             const socket = new WebSocket(`ws://localhost:5000/`);
             canvasState.setSocket(socket);
             canvasState.setSessionId(getParams.id);
+            //toolState.setTool(new Brush(canvasRef.current, socket, getParams.id));
             socket.onopen = () => {
                 socket.send(JSON.stringify({
                     id:getParams.id,
@@ -58,7 +59,16 @@ const Canvas = observer(()=> {
     }
 
     const drawHandler = (msg) => {
-
+        const figure = msg.figure;
+        const ctx = canvasRef.current.getContext('2d');
+        switch (figure.type) {
+            case "brush":
+                Brush.draw(ctx, figure.x, figure.y);
+                break;
+            case "finish":
+                ctx.beginPath();
+                break;
+        }
     }
 
     return (

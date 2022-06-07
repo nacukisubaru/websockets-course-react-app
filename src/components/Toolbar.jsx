@@ -6,6 +6,7 @@ import canvasState from "../store/canvasState";
 import Brush from "../tools/Brush";
 import Rect from "../tools/Rect";
 import Eraser from "../tools/Eraser";
+import { useParams } from "react-router-dom";
 
 const changeColor = e => {
     toolState.setStrokeColor(e.target.value);
@@ -13,9 +14,10 @@ const changeColor = e => {
 }
 
 const ToolBar = observer(()=> {
+    const getParams = useParams();
     return (
         <div className="toolbar">
-            <button className="toolbar-btn brush" onClick={() => toolState.setTool(new Brush(canvasState.canvas))}></button>
+            <button className="toolbar-btn brush" onClick={() => toolState.setTool(new Brush(canvasState.canvas, canvasState.socket, getParams.id))}></button>
             <button className="toolbar-btn rect" onClick={() => toolState.setTool(new Rect(canvasState.canvas))}></button>
             <button className="toolbar-btn circle"></button>
             <button className="toolbar-btn eraser" onClick={() => toolState.setTool(new Eraser(canvasState.canvas))}></button>

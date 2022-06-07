@@ -17,6 +17,13 @@ export default class Brush extends Tool {
     /*завершение линии если отпустили кнопку мыши*/
     mouseUpHandler(e) {
         this.mouseDown = false;
+        this.socket.send(JSON.stringify({
+            method: 'draw',
+            id: this.id,
+            figure: {
+                type: 'finish',
+            }
+        }));
     }
 
     mouseDownHandler(e) {
@@ -30,16 +37,23 @@ export default class Brush extends Tool {
     mouseMoveHandler(e) {
         if(this.mouseDown) {
             //this.draw(e.pageX - e.target.offsetLeft, e.pageY - e.target.offsetTop);
-            
+            this.socket.send(JSON.stringify({
+                method: 'draw',
+                id: this.id,
+                figure: {
+                    type: 'brush',
+                    x: e.pageX - e.target.offsetLeft,
+                    y: e.pageY - e.target.offsetTop
+                }
+            }));
         }
     }
 
-    draw(x, y) {
+    static draw(ctx, x, y) {
         /*метод для рисования линии по коориднатам мыши*/
-        this.ctx.lineTo(x, y);
+        ctx.lineTo(x, y);
         /*выделение линии цветом*/
-        this.ctx.stroke();
-        console.log('draw');
+        ctx.stroke();
     }
 
 }
