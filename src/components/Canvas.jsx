@@ -8,6 +8,7 @@ import { Modal } from "react-bootstrap";
 import modalState from "../store/modalState";
 import { Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 /*отслеживание компонента oberserver ом*/
 const Canvas = observer(()=> {
@@ -18,6 +19,22 @@ const Canvas = observer(()=> {
     useEffect(()=>{
         /*изменение состояния через написанный state*/
         canvasState.setCanvas(canvasRef.current);
+        //запрос для получения файла с сервера с последующей отрисовкой
+        axios.get(`http://localhost:5000/image?id=${getParams.id}`)
+            .then(
+                res => {
+                    const ctx = canvasRef.current.getContext('2d');
+                    const img = new Image();
+                    img.src = res.data;
+                  
+                    img.onload = () => {
+                        console.log(img);
+                        ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+                        /*отрисовка сохраненной картинки*/
+                        ctx.drawImage(img, 0, 0, canvasRef.current.width, canvasRef.current.height);
+                    }
+                }
+            );
     }, []);
 
     useEffect(()=>{
@@ -51,6 +68,9 @@ const Canvas = observer(()=> {
 
     const mouseDownHandler = () => {
         canvasState.pushToUndo(canvasRef.current.toDataURL());
+        //запрос для сохранения файла
+        axios.post(`http://localhost:5000/image?id=${getParams.id}`, {img:canvasRef.current.toDataURL()})
+            .then(res => console.log(res.data));
     }
 
     const connectHandler = () => {
