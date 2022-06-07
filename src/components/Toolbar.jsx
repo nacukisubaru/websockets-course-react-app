@@ -13,6 +13,16 @@ const changeColor = e => {
     toolState.setFillColor(e.target.value);
 }
 
+const download = () => {
+    const dataUrl = canvasState.canvas.toDataURL();
+    const a = document.createElement('a');
+    a.href = dataUrl;
+    a.download = canvasState.sessionId + ".jpg";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
+
 const ToolBar = observer(()=> {
     const getParams = useParams();
     return (
@@ -25,7 +35,7 @@ const ToolBar = observer(()=> {
             <input onChange={e => changeColor(e)} style={{marginLeft:'5px'}} type="color"></input>
             <button className="toolbar-btn undo" onClick={() => canvasState.undo()}></button>
             <button className="toolbar-btn redo" onClick={() => canvasState.redo()}></button>
-            <button className="toolbar-btn save"></button>
+            <button className="toolbar-btn save" onClick={()=> download()}></button>
         </div>
     )
 })
